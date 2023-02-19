@@ -1,11 +1,11 @@
-local has_telescope, telescope = pcall(require, 'telescope')
-local main = require('telescope._extensions.conda.main')
+local has_telescope, telescope = pcall(require, "telescope")
+local main = require("telescope._extensions.conda.main")
 
 if not has_telescope then
-  error('This plugins requires nvim-telescope/telescope.nvim')
+    error("This plugins requires nvim-telescope/telescope.nvim")
 end
 
-return telescope.register_extension{
-  setup = main.setup,
-  exports = { conda = main.conda }
-}
+return telescope.register_extension({
+    setup = main.setup,
+    exports = { conda = main.conda },
+})
