@@ -42,7 +42,7 @@ M.conda = function(opts)
             hidden = opts.hidden or false,
             add_dirs = true,
             depth = 1,
-            on_insert = function(entry, typ)
+            on_insert = function(entry, _)
                 table.insert(conda_envs, entry)
             end,
         })
@@ -71,9 +71,9 @@ M.conda = function(opts)
             results_title = "Conda Environments",
             finder = conda_finder(),
             sorter = conf.generic_sorter(opts),
-            attach_mappings = function(prompt_bufnr, map)
+            attach_mappings = function(prompt_bufnr, _)
                 actions.select_default:replace(function()
-                    env_to_bin = function(env_name, env_path)
+                    local env_to_bin = function(env_name, env_path)
                         if env_name == "base" or not env_name then
                             return conda_path .. "/bin"
                         else
@@ -98,8 +98,8 @@ M.conda = function(opts)
                     local next_env_path = selection["value"]
                     vim.env.CONDA_DEFAULT_ENV = next_env_name
 
-                    current_conda = env_to_bin(current_env_name, current_env_path)
-                    next_conda = env_to_bin(next_env_name, next_env_path)
+                    local current_conda = env_to_bin(current_env_name, current_env_path)
+                    local next_conda = env_to_bin(next_env_name, next_env_path)
                     -- remove '/bin' for prefix
                     vim.env.CONDA_PREFIX = next_conda:sub(1, -5)
                     vim.env.CONDA_PYTHON_EXE = next_conda .. "/python"
